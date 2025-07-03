@@ -35,19 +35,44 @@ PNG, JPEG 이미지를 리사이즈하여 300KB 이하로 압축하고, WebP 형
 
 ## 📦 설치 및 실행
 
-### 1. 의존성 설치
+### 🎯 간편 실행 (권장)
+
+**가상환경과 의존성을 자동으로 관리하는 방식입니다. 별도의 설치 과정이 필요하지 않습니다.**
+
+#### macOS/Linux:
+
+```bash
+# 실행 권한 부여 (최초 1회만)
+chmod +x start_app.sh
+
+# 앱 실행
+./start_app.sh
+```
+
+#### Windows:
+
+```bash
+# 배치 파일 실행
+start_app.bat
+```
+
+파일 탐색기에서 `start_app.bat` (Windows) 또는 `start_app.sh` (macOS/Linux)를 더블클릭하여 실행할 수도 있습니다.
+
+### 🔧 수동 실행
+
+#### 1. 의존성 설치
 
 ```bash
 pip3 install -r requirements.txt --break-system-packages
 ```
 
-### 2. 프로그램 실행
+#### 2. 프로그램 실행
 
 ```bash
 python3 image_resize.py
 ```
 
-### 3. 실행파일 생성
+### 📦 실행파일 생성
 
 실행파일을 만들려면 다음 명령어를 실행하세요:
 
@@ -114,9 +139,13 @@ python3 build.py
 ```
 image_resize/
 ├── image_resize.py     # 메인 프로그램
+├── launcher.py        # 런처 (가상환경 자동 관리)
+├── start_app.sh       # 실행 스크립트 (macOS/Linux)
+├── start_app.bat      # 실행 스크립트 (Windows)
 ├── build.py           # 빌드 스크립트
 ├── requirements.txt   # 의존성 목록
 ├── README.md         # 사용법 설명
+├── venv/             # 가상환경 (자동 생성)
 └── dist/             # 빌드 결과물
     ├── ImageResize   # 실행파일 (macOS/Linux)
     └── ImageResize.app/  # 앱 번들 (macOS)
@@ -140,9 +169,30 @@ image_resize/
 
 ## 🛠️ 문제 해결
 
+### **런처 관련 문제**
+
+1. **Python을 찾을 수 없음**:
+
+   - Python 3.7 이상이 설치되어 있는지 확인하세요.
+   - macOS: `brew install python3`
+   - Windows: https://www.python.org/downloads/
+
+2. **권한 오류 (macOS/Linux)**:
+
+   ```bash
+   chmod +x start_app.sh
+   ```
+
+3. **가상환경 생성 실패**:
+   - 디스크 공간이 충분한지 확인하세요.
+   - `venv` 폴더를 삭제하고 다시 실행해보세요.
+
 ### **일반적인 문제**
 
 1. **모듈을 찾을 수 없음**:
+
+   - 런처를 사용하면 자동으로 해결됩니다.
+   - 수동 실행 시:
 
    ```bash
    pip3 install -r requirements.txt --break-system-packages
