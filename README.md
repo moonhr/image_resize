@@ -82,6 +82,39 @@ python3 build.py
 
 빌드가 완료되면 `dist` 폴더에 실행파일이 생성됩니다.
 
+### 🪟 Windows 1클릭 설치파일(`setup.exe`) 생성
+
+일반 사용자 배포용으로는 `ImageResize.exe`보다 `setup.exe` 배포를 권장합니다.
+
+#### 방법 1) 로컬 Windows에서 생성
+
+1. [Inno Setup](https://jrsoftware.org/isdl.php) 설치
+2. PowerShell에서 프로젝트 폴더 이동 후 실행
+
+```powershell
+.\scripts\build_windows_installer.ps1 -AppVersion 2.0.0
+```
+
+완료 후 설치파일은 `dist\installer\ImageResize-Setup-2.0.0.exe` 형태로 생성됩니다.
+
+#### 방법 2) GitHub Actions로 자동 생성 (권장)
+
+- 워크플로 파일: `.github/workflows/windows-installer.yml`
+- 실행 방법:
+  1. GitHub 저장소 `Actions` 탭에서 **Build Windows Installer** 실행 (`workflow_dispatch`)
+  2. 또는 `v2.0.0` 같은 태그 푸시 시 자동 실행
+
+태그 푸시 예시:
+
+```bash
+git tag v2.0.0
+git push origin v2.0.0
+```
+
+결과:
+- Actions Artifact에 `setup.exe` 업로드
+- 태그 빌드인 경우 GitHub Release Asset에도 자동 업로드
+
 ## 📖 사용법
 
 ### **단일 이미지 리사이즈**
@@ -138,6 +171,12 @@ python3 build.py
 
 ```
 image_resize/
+├── .github/workflows/
+│   └── windows-installer.yml  # Windows 설치파일 자동 빌드
+├── installer/
+│   └── ImageResize.iss         # Inno Setup 설치 스크립트
+├── scripts/
+│   └── build_windows_installer.ps1  # 로컬 Windows 설치파일 빌드
 ├── image_resize.py     # 메인 프로그램
 ├── launcher.py        # 런처 (가상환경 자동 관리)
 ├── start_app.sh       # 실행 스크립트 (macOS/Linux)
@@ -147,8 +186,9 @@ image_resize/
 ├── README.md         # 사용법 설명
 ├── venv/             # 가상환경 (자동 생성)
 └── dist/             # 빌드 결과물
-    ├── ImageResize   # 실행파일 (macOS/Linux)
-    └── ImageResize.app/  # 앱 번들 (macOS)
+    ├── ImageResize        # 실행파일 (macOS/Linux)
+    ├── ImageResize.app/   # 앱 번들 (macOS)
+    └── installer/         # Windows setup.exe 출력 폴더
 ```
 
 ## 🎯 사용 예시

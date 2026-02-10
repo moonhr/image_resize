@@ -1,0 +1,72 @@
+name: Build Windows Installer
+
+on:
+  workflow_dispatch:
+    inputs:
+      app_version:
+        description: "Installer version (example: 2.0.0)"
+        required: false
+        default: "2.0.0"
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-installer:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Build ImageResize.exe
+        run: python build.py
+
+      - name: Install Inno Setup
+        run: choco install innosetup --no-progress -y
+
+      - name: Resolve installer version
+        id: version
+        shell: pwsh
+        run: |
+          if ("${{ github.event_name }}" -eq "push" -and "${{ github.ref_type }}" -eq "tag") {
+            $resolved = "${{ github.ref_name }}".TrimStart("v")
+          } elseif ("${{ github.event.inputs.app_version }}") {
+            $resolved = "${{ github.event.inputs.app_version }}"
+          } else {
+            $resolved = "2.0.0"
+          }
+
+          "value=$resolved" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+          Write-Host "Installer version: $resolved"
+
+      - name: Build setup.exe
+        shell: pwsh
+        run: |
+          iscc "/DMyAppVersion=${{ steps.version.outputs.value }}" "installer\ImageResize.iss"
+
+      - name: Upload installer artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ImageResize-Setup-${{ steps.version.outputs.value }}
+          path: dist/installer/*.exe
+          if-no-files-found: error
+
+      - name: Publish GitHub release asset
+        if: github.event_name == 'push' && github.ref_type == 'tag'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/installer/*.exe

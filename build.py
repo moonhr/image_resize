@@ -9,7 +9,8 @@ import shutil
 def build_executable():
     """실행파일 빌드"""
     print("이미지 리사이즈 프로그램 빌드를 시작합니다...")
-    
+    icon_file = "resizeIcon.ico"
+
     # 빌드 옵션 설정
     build_options = [
         "pyinstaller",
@@ -20,6 +21,10 @@ def build_executable():
         "--noconfirm",  # 확인 없이 진행
         "image_resize.py"
     ]
+
+    # Windows 빌드에서는 루트의 .ico를 실행파일 아이콘으로 사용
+    if sys.platform == "win32" and os.path.exists(icon_file):
+        build_options.insert(-1, f"--icon={icon_file}")
     
     try:
         # 빌드 실행
