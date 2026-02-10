@@ -14,7 +14,7 @@ AppPublisher={#MyAppPublisher}
 DefaultDirName={localappdata}\Programs\{#MyAppName}
 DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
-OutputDir=dist\installer
+OutputDir=..\dist\installer
 OutputBaseFilename=ImageResize-Setup-{#MyAppVersion}
 Compression=lzma
 SolidCompression=yes
@@ -32,7 +32,7 @@ Name: "korean"; MessagesFile: "compiler:Languages\Korean.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "dist\ImageResize.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\dist\ImageResize.exe"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
