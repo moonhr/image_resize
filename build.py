@@ -6,6 +6,11 @@ import sys
 import subprocess
 import shutil
 
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 def build_executable():
     """실행파일 빌드"""
     print("이미지 리사이즈 프로그램 빌드를 시작합니다...")
