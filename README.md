@@ -92,23 +92,23 @@ python3 build.py
 2. PowerShell에서 프로젝트 폴더 이동 후 실행
 
 ```powershell
-.\scripts\build_windows_installer.ps1 -AppVersion 2.0.0
+.\scripts\build_windows_installer.ps1 -AppVersion 0.1.0
 ```
 
-완료 후 설치파일은 `dist\installer\ImageResize-Setup-2.0.0.exe` 형태로 생성됩니다.
+완료 후 설치파일은 `dist\installer\ImageResize-Setup-0.1.0.exe` 형태로 생성됩니다.
 
 #### 방법 2) GitHub Actions로 자동 생성 (권장)
 
 - 워크플로 파일: `.github/workflows/windows-installer.yml`
 - 실행 방법:
   1. GitHub 저장소 `Actions` 탭에서 **Build Windows Installer** 실행 (`workflow_dispatch`)
-  2. 또는 `v2.0.0` 같은 태그 푸시 시 자동 실행
+  2. 또는 `v0.1.0` 같은 태그 푸시 시 자동 실행
 
 태그 푸시 예시:
 
 ```bash
-git tag v2.0.0
-git push origin v2.0.0
+git tag v0.1.0
+git push origin v0.1.0
 ```
 
 결과:

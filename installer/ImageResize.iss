@@ -1,7 +1,7 @@
 ; Inno Setup script for Windows installer
 #define MyAppName "ImageResize"
 #ifndef MyAppVersion
-  #define MyAppVersion "2.0.0"
+  #define MyAppVersion "0.1.0"
 #endif
 #define MyAppPublisher "ImageResize"
 #define MyAppExeName "ImageResize.exe"
